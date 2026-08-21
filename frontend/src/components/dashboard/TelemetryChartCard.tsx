@@ -28,7 +28,8 @@ export function TelemetryChartCard({
   onSelectDevice,
 }: TelemetryChartCardProps) {
   const [metricMode, setMetricMode] = useState<'temp' | 'humidity' | 'both'>('temp')
-  const currentDev = devices.find((d) => d.id === selectedDeviceId) || devices[0]
+  const espDev = devices.find((d) => d.device_code.includes('ESP32') || d.name.includes('Node'))
+  const currentDev = devices.find((d) => d.id === selectedDeviceId) || espDev || devices[0]
 
   const chartData = telemetry.map((pt) => ({
     time: format(new Date(pt.timestamp), 'HH:mm'),
@@ -59,7 +60,7 @@ export function TelemetryChartCard({
         {/* Device Switcher & Metric toggle */}
         <div className="flex items-center gap-2 flex-wrap">
           <select
-            value={selectedDeviceId || ''}
+            value={selectedDeviceId || currentDev?.id || ''}
             onChange={(e) => onSelectDevice(e.target.value)}
             className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 focus:border-blue-500 focus:outline-hidden"
           >

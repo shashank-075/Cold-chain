@@ -50,7 +50,10 @@ export function Dashboard() {
   const { data: ledgerRecords = [] } = useComplianceLedger()
   const { data: verification } = useVerifyChain()
 
-  const activeDevice = selectedDeviceId ? devices.find((d) => d.id === selectedDeviceId) : devices[0]
+  const espDevice = devices.find((d) => d.device_code.includes('ESP32') || d.name.includes('Node'))
+  const activeDevice = selectedDeviceId
+    ? devices.find((d) => d.id === selectedDeviceId)
+    : espDevice || devices[0]
   const { data: telemetry = [] } = useDeviceTelemetry(activeDevice?.id || null)
 
   const simulateTickMutation = useSimulateTick()
