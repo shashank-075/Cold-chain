@@ -21,6 +21,8 @@ htmlcov/
 *.sqlite
 *.sqlite3
 *.log
+backend/storage/captures/*
+!backend/storage/captures/.gitkeep
 
 # Node and Vite
 node_modules/
